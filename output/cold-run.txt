@@ -1,0 +1,23 @@
+Cold run - fresh clone, new Python 3.12 virtual environment, Linux x86_64
+Started: 2026-11-19 18:51:44 UTC
+
+$ python3.12 -m venv .venv && source .venv/bin/activate
+Python 3.12.3
+$ python -m pip install -r requirements.txt
+exit 0
+install took 13 s
+
+$ python run_analysis.py
+PILOT (objective not met): 75 / 0 / 0 / 25 (BIL/IEF/LQD/VT) | modeled net return 6.04% vs objective 6.50% | worst 12m -13.2% | window spread 35 pts
+Wrote /tmp/cold/output/results.md, results.json and two charts.
+exit 0
+
+$ python -m pytest -q
+36 passed in 12.52s
+
+$ python -m streamlit run app.py --server.headless true   (then the app health check)
+app health endpoint: HTTP 200
+
+First failure: none
+Total elapsed: 40 s (of which install 13 s)
+Result: decision line above; output/results.md regenerated identical to the committed copy except its timestamp line

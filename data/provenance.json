@@ -1,0 +1,46 @@
+{
+  "prices_monthly.csv": {
+    "sha256": "d411a2247724e82c70688b9356c334bf60aa0cb3fd9026529be8a666b8110728",
+    "retrieved_utc": "2026-11-19T18:10:33Z",
+    "retrieved_by": "Browser fetch of the Yahoo Finance chart API (same endpoint family as Lab 15), run from the Claude desktop app's browser pane on Shrey's computer",
+    "field": "indicators.adjclose[0].adjclose (Adj Close: price adjusted for distributions and splits)",
+    "method": "Daily bars requested with period1=1167609600 (2007-01-01) and period2=1795200000; for each calendar month the LAST trading day's Adj Close is kept, so each row's date is a real trading day. Rows kept: 2008-06-30 (first month-end with all four funds; VT began trading 2008-06-26) to 2026-10-30 (last complete month on the retrieval date). November 2026 is incomplete and excluded.",
+    "cross_check": "The daily-derived month-end Adj Close was compared with Yahoo's own monthly bars for every overlapping month. For every complete month the largest relative gap is below 0.0002% for all four funds. The only larger gaps (up to 1.34% for VT) are in November 2026, a partial month that is excluded from the file.",
+    "tickers": {
+      "BIL": {
+        "name": "State Street SPDR Bloomberg 1-3 Month T-Bill ETF",
+        "daily_request": "https://query1.finance.yahoo.com/v8/finance/chart/BIL?period1=1167609600&period2=1795200000&interval=1d&events=div%2Csplits",
+        "daily_response_sha256": "4b3e3af6282bdce52777540159a1c278824c76fd7ae87bf6332373837580d7e2",
+        "daily_rows": 4902,
+        "dividends_in_response": 129
+      },
+      "IEF": {
+        "name": "iShares 7-10 Year Treasury Bond ETF",
+        "daily_request": "https://query1.finance.yahoo.com/v8/finance/chart/IEF?period1=1167609600&period2=1795200000&interval=1d&events=div%2Csplits",
+        "daily_response_sha256": "ec9c682008d82fe1fe2168cccdba777c35d346861ee2f9ce9d6545e942093da3",
+        "daily_rows": 5003,
+        "dividends_in_response": 238
+      },
+      "LQD": {
+        "name": "iShares iBoxx $ Investment Grade Corporate Bond ETF",
+        "daily_request": "https://query1.finance.yahoo.com/v8/finance/chart/LQD?period1=1167609600&period2=1795200000&interval=1d&events=div%2Csplits",
+        "daily_response_sha256": "8c514a8a53a298c59c20384d121fd69380b84b07062a7ce1ab26029ab0dcccb2",
+        "daily_rows": 5003,
+        "dividends_in_response": 237
+      },
+      "VT": {
+        "name": "Vanguard Total World Stock ETF",
+        "daily_request": "https://query1.finance.yahoo.com/v8/finance/chart/VT?period1=1167609600&period2=1795200000&interval=1d&events=div%2Csplits",
+        "daily_response_sha256": "4d40425c05d5ea2f8b8dd29906db61279592254b06bb0cfaf0e481a5ff8d485e",
+        "daily_rows": 4630,
+        "dividends_in_response": 61
+      }
+    },
+    "known_caveat": "Yahoo back-adjusts Adj Close every time a fund pays a distribution, so a later download shows different price LEVELS for old months. Monthly RETURNS are what the model uses and they are essentially unchanged by later adjustments. This file is a snapshot as of the retrieval date, not a point-in-time archive of each historical month."
+  },
+  "gs2_vintages.csv": {
+    "retrieved_utc": "2026-11-19T18:14:34Z",
+    "source": "ALFRED (Archival FRED), Federal Reserve Bank of St. Louis; series GS2 from the Federal Reserve Board H.15 release",
+    "method": "One request per decision date to alfredgraph.csv with vintage_date = that date; the last non-missing observation in that vintage is what was knowable on the decision date. Each vintage was also compared with the 2026-11-19 vintage: 0 revised values in every vintage."
+  }
+}
