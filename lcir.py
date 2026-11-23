@@ -39,7 +39,7 @@ def git(*args):
 def check_prediction(skip_git: bool) -> dict:
     if not PRED.exists():
         sys.exit("docs/lcir/prediction.md is missing.")
-    text = PRED.read_text()
+    text = PRED.read_text(encoding="utf-8")
     if "<<" in text or ">>" in text:
         sys.exit("prediction.md still has <<blanks>>. Fill every one, AI closed, then commit.")
     info = {"text": text, "commit": "not verified (--skip-git-check)", "commit_time": "",
@@ -48,11 +48,11 @@ def check_prediction(skip_git: bool) -> dict:
         return info
     if git("rev-parse", "--is-inside-work-tree").returncode != 0:
         sys.exit("This folder is not a git repository. Commit the prediction first.")
-    log = git("log", "-1", "--format=%H|%cI", "--", str(PRED.relative_to(e.ROOT)))
+    log = git("log", "-1", "--format=%H|%cI", "--", PRED.relative_to(e.ROOT).as_posix())
     if not log.stdout.strip():
         sys.exit("prediction.md has never been committed. Run:\n  git add docs/lcir/prediction.md\n"
                  "  git commit -m \"LCIR prediction (AI off)\"\n  git push\nthen run this again.")
-    if git("diff", "--quiet", "HEAD", "--", str(PRED.relative_to(e.ROOT))).returncode != 0:
+    if git("diff", "--quiet", "HEAD", "--", PRED.relative_to(e.ROOT).as_posix()).returncode != 0:
         sys.exit("prediction.md was edited after its last commit. A locked prediction cannot "
                  "change after it is committed. Undo the edit (git checkout -- docs/lcir/prediction.md).")
     sha, when = log.stdout.strip().split("|")
@@ -127,7 +127,7 @@ def main():
     ap.add_argument("--skip-git-check", action="store_true",
                     help="only for a test run; the record will say 'not verified'")
     a = ap.parse_args()
-    if "### Locked Changed-Input Record" in VALID.read_text():
+    if "### Locked Changed-Input Record" in VALID.read_text(encoding="utf-8"):
         sys.exit("The Locked Changed-Input Record has already been run and written into "
                  "docs/validation-and-ai-use.md. It is locked; a second run would overwrite it.")
     pred = check_prediction(a.skip_git_check)
@@ -164,13 +164,13 @@ def main():
 **Failure diagnosis (only if the prediction missed; otherwise write "not needed"):** <<the first assumption, unit, sign or rule that broke - do not rewrite the prediction>>
 """
     RESULT.write_text("# Locked Changed-Input Record - machine record\n\n" + body +
-                      "\nThe reconciliation is in docs/validation-and-ai-use.md, section 7.\n")
+                      "\nThe reconciliation is in docs/validation-and-ai-use.md, section 7.\n", encoding="utf-8")
     body = body + student
-    v = VALID.read_text()
+    v = VALID.read_text(encoding="utf-8")
     if START in v and END in v:
         pre, rest = v.split(START, 1)
         _, post = rest.split(END, 1)
-        VALID.write_text(pre + START + "\n" + body + "\n" + END + post)
+        VALID.write_text(pre + START + "\n" + body + "\n" + END + post, encoding="utf-8")
     print(f"Before: {before['weights']} -> After: {after['weights']} | "
           f"{before['Recommendation']} -> {after['Recommendation']}")
     print("Wrote docs/lcir/result.md and the LCIR section of docs/validation-and-ai-use.md.")

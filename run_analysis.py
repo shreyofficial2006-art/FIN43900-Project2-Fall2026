@@ -222,7 +222,7 @@ def main():
                         "Kept: daily closes move inside the month and return to the same close"]
                        for f in flags]))
     L.append("")
-    (OUT / "results.md").write_text("\n".join(L))
+    (OUT / "results.md").write_text("\n".join(L), encoding="utf-8")
 
     out = {
         "review_date": REVIEW, "recommendation": verb, "reason": why,
@@ -247,7 +247,7 @@ def main():
         "data_sha256": {"prices": sha(e.PRICES_CSV), "gs2": sha(e.GS2_CSV),
                         "proxy": sha(e.PROXY_CSV)},
     }
-    (OUT / "results.json").write_text(json.dumps(out, indent=2, default=float))
+    (OUT / "results.json").write_text(json.dumps(out, indent=2, default=float), encoding="utf-8")
     charts(bt, tr)
     print(f"{verb}: {e.fmt_w(res.weights)} (BIL/IEF/LQD/VT) | modeled net return "
           f"{res.exp_return:.2%} vs objective {e.MAPLE.target_return:.2%} | worst 12m "

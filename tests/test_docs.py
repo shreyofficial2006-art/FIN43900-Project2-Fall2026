@@ -7,14 +7,14 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 RES = ROOT / "output" / "results.json"
-MEMO = (ROOT / "docs" / "decision-memo.md").read_text()
+MEMO = (ROOT / "docs" / "decision-memo.md").read_text(encoding="utf-8")
 
 
 @pytest.fixture(scope="module")
 def r():
     if not RES.exists():
         pytest.skip("run python run_analysis.py first")
-    return json.loads(RES.read_text())
+    return json.loads(RES.read_text(encoding="utf-8"))
 
 
 def p(x, nd=2):

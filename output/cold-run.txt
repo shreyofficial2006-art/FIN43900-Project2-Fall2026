@@ -1,5 +1,5 @@
 Cold run - fresh clone, new Python 3.12 virtual environment, Linux x86_64
-Started: 2026-11-19 18:51:44 UTC
+Started: 2026-11-23 23:25:03 UTC
 
 $ python3.12 -m venv .venv && source .venv/bin/activate
 Python 3.12.3
@@ -13,11 +13,11 @@ Wrote /tmp/cold/output/results.md, results.json and two charts.
 exit 0
 
 $ python -m pytest -q
-36 passed in 12.52s
+36 passed in 14.06s
 
 $ python -m streamlit run app.py --server.headless true   (then the app health check)
 app health endpoint: HTTP 200
 
 First failure: none
-Total elapsed: 40 s (of which install 13 s)
+Total elapsed: 42 s (of which install 13 s)
 Result: decision line above; output/results.md regenerated identical to the committed copy except its timestamp line

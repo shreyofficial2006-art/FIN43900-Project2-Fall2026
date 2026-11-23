@@ -89,18 +89,18 @@ def main():
     last_complete = (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
     REFRESH.mkdir(parents=True, exist_ok=True)
     rows, meta = fetch_prices(last_complete)
-    with (REFRESH / "prices_monthly.csv").open("w", newline="") as f:
+    with (REFRESH / "prices_monthly.csv").open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f, lineterminator="\n")
         w.writerow(["date"] + TICKERS)
         w.writerows(rows)
     reviews = [f"{y}-09-30" for y in range(2009, today.year + 1) if date(y, 9, 30) <= today]
     g = fetch_gs2(reviews)
-    with (REFRESH / "gs2_vintages.csv").open("w", newline="") as f:
+    with (REFRESH / "gs2_vintages.csv").open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f, lineterminator="\n")
         w.writerow(["vintage_date", "last_month_measured", "gs2_percent", "observations_in_vintage",
                     "value_in_2026-11-19_vintage", "response_sha256", "source_url"])
         w.writerows(g)
-    (REFRESH / "refresh_provenance.json").write_text(json.dumps(meta, indent=2))
+    (REFRESH / "refresh_provenance.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     # compare monthly RETURNS with the frozen snapshot (levels change at every distribution)
     sys.path.insert(0, str(ROOT))
     import engine as e
