@@ -2,7 +2,7 @@
 
 > **AI disclosure:** built with Anthropic Claude (Opus 5.5); see [validation-and-ai-use.md](validation-and-ai-use.md). The analysis and the decision are mine. **Education, not investment advice.**
 
-Repository: **https://github.com/shreyofficial2006-art/FIN43900-Project2-Fall2026** (public; the instructional team can open it logged out). Frozen at commit `<<commit hash of the final push>>`.
+Repository: **https://github.com/shreyofficial2006-art/FIN43900-Project2-Fall2026** (public; the instructional team can open it logged out). Frozen at commit `d68d545` (all content; the next commit only adds this hash and is the last before the deadline).
 
 | # | Part | Location | Notes |
 |---:|---|---|---|
