@@ -67,7 +67,7 @@ The course rule applies: tests written with the same AI do not prove the code on
 |---|---|---|---|
 | C1 - recompute the decision numbers by hand | Not done before the deadline | - | Not checked by hand; the same arithmetic is covered by the course's Lab 14/15 known answers (section 2), and I did C2 and C3 instead |
 | C2 - the signal against its source | On 23-Nov-2026 I opened https://alfred.stlouisfed.org/graph/alfredgraph.csv?id=GS2&vintage_date=2026-09-30 and read the last row | Last row 2026-08-01, 4.22; no September row | **Accept:** the app uses exactly the GS2 value that was published by the 30-Sep-2026 review |
-| C3 - a second AI model cross-examines the central claim (the one shown in Video 1) | << which model, what I pasted, what it said >> | << the critique, and my check of it >> | << >> |
+| C3 - a second AI model cross-examines the central claim (the one shown in Video 1) | Gemini (Google), 23-Nov-2026. I pasted the whole memo and asked for the claim it trusts least and one number that could be wrong. It said: (1) "6.5% and -15% cannot both be met" depends on the bond return assumptions; (2) the 0.04-point cushion over the 6.0% objective in option A becomes a shortfall after the memo's own 0.07-point compounding drag | (1) The memo already names bond estimates as the most consequential open assumption. `output/results.md` shows that with bond returns raised 6 points a 30/30/10/30 mix reaches 6.5% inside the historical loss limit, but loses 21.4% in the all-worst-at-once stress. Gemini's own test, run by Claude: no mix reaches 6.5% once that stress is also required (best 6.14%). (2) I did the subtraction: 6.04% - 0.07% = 5.97%, below 6.0% | (1) **Qualify:** true under the memo's estimates or when the simultaneous stress is required; not on the historical limit alone, which the memo already says. (2) **Accept, corrected:** option A now sets the objective at 5.9%, which 75/25 clears both as modeled (6.04%) and after compounding (5.97%) |
 
 ## 5. Reproducibility and cold run
 
@@ -92,7 +92,7 @@ Results are deterministic: the same data files give the same numbers (no random 
 | Benchmark 60% VT / 40% LQD | Kept from Lab 20 | Accept: the client-style policy benchmark, and it shows the reserve rule binding | - |
 | Drafts of README, memo, data card, this record | Drafted from `output/results.md` | Edited and accepted; every memo number is checked against `results.json` by `tests/test_docs.py` | test_docs.py |
 | Video speaking notes | Rehearsal outlines | Used as notes; the recordings are mine | - |
-| Second-model review (C3) | << model, date >> | << >> | << >> |
+| Second-model review (C3) | Gemini critique of the memo (Google Gemini, 23-Nov-2026): two points | Point 1 qualified (already disclosed as the main open assumption); point 2 accepted: option A lowered from 6.0% to 5.9% | I checked 6.04 - 0.07 = 5.97 myself; Gemini's proposed bond test was run by Claude (0 mixes reach 6.5% with the simultaneous stress) |
 
 **What the AI did well:** fast, consistent code with known-answer tests; found the 2008 data-window problem. **Where it needed checking:** it first built the loss screen on VT's own history, which looked safe and was not; its tests cannot vouch for its own code, so the course known answers and my hand checks carry the weight.
 

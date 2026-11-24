@@ -14,7 +14,7 @@
 
 1. **Approve the 75/25 allocation** for one annual cycle, reviewed quarterly against the triggers below.
 2. **Resolve a conflict in the mandate by the March 2027 meeting.** The 6.5% return objective and the -15% worst-12-month loss limit cannot both be met. Choose one:
-   - **A - keep the loss limit, set the objective to 6.0%** *(my recommendation: the limit protects the awards)*. 75/25 then meets every rule (modeled 6.04%, a thin 0.04-point margin).
+   - **A - keep the loss limit, set the objective to 5.9%** *(my recommendation: the limit protects the awards)*. 75/25 then meets every rule: 6.04% as modeled, about 5.97% after compounding. I first proposed 6.0%; a second-model review pointed out that the 0.04-point cushion disappears once the 0.07-point compounding drag is counted, so I lowered it.
    - **B - keep 6.5%, widen the loss limit to -20%.** The process would hold 65/35, which would have lost about **18.5% ($185,000)** in the 12 months to February 2009.
 3. **Fund one redesign for the pilot year:** bond expected returns from yields, each with its own data card, so bonds are judged on fair estimates; a mix with bonds may be traded only if it also passes the all-worst-at-once stress.
 
