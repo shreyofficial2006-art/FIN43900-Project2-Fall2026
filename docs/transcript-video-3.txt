@@ -1,1 +1,17 @@
-Video 3 transcript - paste the corrected YouTube transcript here (see the guide, Part 6).
+FIN 439 Project 2 - Video 3 - Committee presentation (Shrey Goyal)
+https://youtu.be/uI3rXDd8bzU
+Source: the speaking script I read from while recording. YouTube's automatic captions were not
+ready to copy when I submitted, so wording can differ slightly from the recording; the video's
+captions (CC button) are the exact words.
+
+Good evening. I'm Shrey Goyal, portfolio analyst for the Maple Education Fund. I used Anthropic's Claude to build this tool and draft my materials; the analysis and recommendation are mine. This is education, not investment advice.
+Here is the app running live, as of the 30 September review. The headline: pilot, objective not met. The process puts 75% in BIL, $750,000, and 25% in VT, $250,000. The cash estimate is the 2-year Treasury yield as published by then: 4.22% for August.
+Every baseline breaks a rule. Equal weight and inverse volatility miss the return objective. The 60/40 benchmark has no reserve and could have lost 33% in a year. The process passes every hard rule but misses 6.5% by 0.46 points.
+Watch one control. At a minus 20% loss limit, 6.5% becomes reachable with 65/35. Back at minus 15%, it isn't. That is the decision in front of you.
+My recommendation: pilot, do not adopt. Allocate 75% BIL and 25% VT, with VT between 20 and 25%, for the 2026-27 year. From my Lab 20 paper pilot of 55/45, that moves $200,000 from VT to BIL.
+Why. The best return inside your minus 15% limit is 6.04%. Each extra point of loss you tolerate buys only about 0.15 points of return. Counting the whole 2008 crisis, world stocks fell 47% in 12 months, and 65/35 would have lost 18.5%, about $185,000.
+Has the process earned adoption? No. Deciding every September since 2013 with only what was known then, 6.5% was reachable in 1 of 13 reviews. It earned 4.13% a year against 4.19% for equal weight, and in 2022 it lost 16.4% when stocks and bonds fell together.
+The allocation itself is robust. Cutting the stock or cash estimates, raising costs to 75 basis points, or raising the reserve to 20% leaves it at 75/25; only the expected return moves. The open assumption is bond returns, which rest on negative trailing averages. A bond-heavy mix fails our all-worst-at-once stress, so bonds stay out until that is redesigned. The risk of holding 75% in bills is that rates fall.
+What we monitor quarterly. If GS2 reaches 4.83%, 75/25 meets 6.5%; October's reading is already 4.74%. If GS2 falls below 3.5%, we review. If the fund loses more than 10% in 12 months we review; past 15% we stop. If bonds re-enter, they must pass the stress first. If a data check fails, we don't rebalance.
+My ask. One: approve 75/25 for one year. Two: by March, choose between keeping the minus 15% limit with a 5.9% objective, which I recommend because the limit protects the awards, or keeping 6.5% and accepting minus 20%. Three: fund the redesign of bond estimates. We would adopt the process next September only if the estimation windows agree within 20 points and no trigger fired.
+Thank you. I'm happy to take questions.

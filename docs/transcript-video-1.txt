@@ -1,1 +1,14 @@
-Video 1 transcript - paste the corrected YouTube transcript here (see the guide, Part 6).
+FIN 439 Project 2 - Video 1 - How my system changed (Shrey Goyal)
+https://youtu.be/HkuK93My9rc
+Source: the speaking script I read from while recording. YouTube's automatic captions were not
+ready to copy when I submitted, so wording can differ slightly from the recording; the video's
+captions (CC button) are the exact words.
+
+Hi, I'm Shrey Goyal. This is Video 1 for FIN 439 Project 2. I used Anthropic's Claude to write the code, pull the data and draft my documents; the analysis and the decision are mine. Education, not investment advice.
+My client is the Maple Education Fund, a $1 million scholarship reserve. In Lab 15 my app picked 60% T-bills and 40% world stocks. In Lab 20 I recommended a paper pilot of 55/45.
+For Project 2 I changed three things: a loss limit, because the board cuts awards past a 15% loss in 12 months; GS2, as known on the review date, as the cash return; and a walk-forward test of every September since 2013.
+That changed the answer. VT's prices start in mid-2008, so on those prices 65/35 looks like it lost 9%. Counting the whole crisis, it lost 18.5%. So my thinking changed: the goal and the loss limit contradict each other, and the committee has to choose.
+The AI output I checked: Gemini, a second AI, reviewed my memo and made two points.
+One: my main claim depends on my bond estimates. My memo already says so, so I qualified it. A bond-heavy mix reaches 6.5% but fails my all-worst-at-once stress.
+Two, a real mistake: option A asked for 6.0%, but 6.04 minus the 0.07 compounding drag is 5.97. I checked the subtraction, accepted it, and lowered option A to 5.9%.
+So the system got honest about 2008, and the AI review made my recommendation more careful. Thanks.

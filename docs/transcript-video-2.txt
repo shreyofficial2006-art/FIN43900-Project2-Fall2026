@@ -1,1 +1,18 @@
-Video 2 transcript - paste the corrected YouTube transcript here (see the guide, Part 6).
+FIN 439 Project 2 - Video 2 - Code walkthrough (Shrey Goyal)
+https://youtu.be/r1jxDpjz_gY
+Source: the speaking script I read from while recording. YouTube's automatic captions were not
+ready to copy when I submitted, so wording can differ slightly from the recording; the video's
+captions (CC button) are the exact words.
+
+This is Video 2, my code walkthrough. I used Anthropic's Claude to help write this code; the analysis and decisions are mine. Education, not investment advice.
+The flow: monthly prices go through a data gate and become returns up to the review date only, then estimates. GS2 from the archive replaces the cash estimate. A loss screen checks every mix, a search picks one, and a decision ladder says allocate, pilot or reject. engine.py does all the math, app.py only displays it, run_analysis.py is the one command, and lcir.py runs my locked prediction.
+First the data gate. It refuses dates out of order, a missing month or a missing price. It never fills a gap.
+This is my point-in-time signal. It reads the ALFRED vintage dated the review date, so on 30 September 2026 it gets August's 4.22%, not September's, which wasn't published yet. If there is no archive for that date, it refuses, so it can't use a stale value.
+Only months up to the review date are used. Expected return is the monthly mean times 12, covariance times 12, and BIL's expected return is replaced by GS2.
+The search tries all 1,771 mixes in 5-point steps. For each, it computes the return minus 10 basis points of cost, and the volatility, w-transpose-sigma-w. The hard rules are at least 10% BIL and a worst 12-month loss no worse than minus 15%, from worst_12m_matrix, which compounds every rolling 12 months. Among mixes that also reach 6.5%, it keeps the lowest volatility. If none reach 6.5%, it shows the highest-return mix that still obeys the hard rules, and flags it.
+Then the ladder: allocate if it meets every rule and moves 20 points or less across estimation windows; pilot if not; reject if even the hard rules fail.
+To reproduce: one command prints the decision line and writes results.md. The tests: 36 pass, including the Lab 14 and 15 known answers, like the 10.46% benchmark volatility, which would be 9.90 if the correlation term were missing. Those answers came from the course before my code existed. When I ran this on my own laptop, the first install failed: pandas 3.0.5 had no Windows package for Python 3.15. I pinned pandas 3.1.1, and the same results came out.
+My highest-risk claim is that 6.5% is impossible inside the loss limit. My test: on fund prices alone, which start mid-crisis, a 65/35 mix passes. Counting the whole 2008 crisis, the same mix loses 18.5%. The VT proxy is used only in this screen.
+My locked changed-input record. I changed the BIL reserve minimum from 10% to 80%. Here's the commit: my prediction was pushed at 6:33 PM, before the run. I predicted VT would fall from 25% to 20%, the return to about 5.66%, the worst loss would shrink to about minus 10.4%, and the recommendation would stay pilot. All five matched. To be honest: I took those numbers from the 80/20 row already in my results file, so the match shows I read my own output correctly, not that I forecast it independently.
+One failure mode: bond expected returns are trailing averages, negative after 2022. Raise them 6 points and bonds come in and 6.5% becomes reachable, but that mix loses 21.4% if every fund has its worst year at once. That's the redesign for the pilot year.
+That's the code. Thanks.
