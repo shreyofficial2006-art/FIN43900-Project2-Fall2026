@@ -17,7 +17,7 @@ Review date: **30 September 2026**. Data retrieved 19 November 2026 (prices thro
 
 ## 2. Known answers and tests
 
-`python -m pytest -q` → **36 passed** (Python 3.12 clean environment and Python 3.13, 19-Nov-2026; see section 5).
+`python -m pytest -q` → **36 passed** in a clean Python 3.12 environment (by the AI, 23-Nov-2026) and on my Windows laptop with Python 3.15 (23-Nov-2026, after the pandas fix in section 5).
 
 | Test | Known answer | Source of the answer |
 |---|---|---|
@@ -65,16 +65,16 @@ The course rule applies: tests written with the same AI do not prove the code on
 
 | Check | What I did | What I found | Accept / qualify / correct / reject |
 |---|---|---|---|
-| C1 - recompute the decision numbers by hand | << e.g. In Google Sheets, from data/prices_monthly.csv, I computed VT's 60 monthly returns Oct-2021 to Sep-2026, their average x 12, and 0.75 x 4.22% + 0.25 x VT - 0.10% >> | << my numbers vs the app's 11.90% and 6.04% >> | << >> |
-| C2 - the signal against its source | << opened the ALFRED vintage for 2026-09-30 and checked the last row >> | << >> | << >> |
+| C1 - recompute the decision numbers by hand | Not done before the deadline | - | Not checked by hand; the same arithmetic is covered by the course's Lab 14/15 known answers (section 2), and I did C2 and C3 instead |
+| C2 - the signal against its source | On 23-Nov-2026 I opened https://alfred.stlouisfed.org/graph/alfredgraph.csv?id=GS2&vintage_date=2026-09-30 and read the last row | Last row 2026-08-01, 4.22; no September row | **Accept:** the app uses exactly the GS2 value that was published by the 30-Sep-2026 review |
 | C3 - a second AI model cross-examines the central claim (the one shown in Video 1) | << which model, what I pasted, what it said >> | << the critique, and my check of it >> | << >> |
 
 ## 5. Reproducibility and cold run
 
 | Run | Environment | Steps | First failure | Time |
 |---|---|---|---|---|
-| Clean environment (by the AI, 19-Nov-2026) | Fresh clone, new Python 3.12 virtual environment, Linux | `pip install -r requirements.txt` → `python run_analysis.py` → `python -m pytest -q` → `python -m streamlit run app.py` | none | see `output/cold-run.txt` |
-| My own machine | << Windows or Mac, Python version >> | the README steps, nothing else | << none / what broke and the fix >> | << minutes >> |
+| Clean environment (by the AI, 23-Nov-2026) | Fresh clone, new Python 3.12 virtual environment, Linux | `pip install -r requirements.txt` → `python run_analysis.py` → `python -m pytest -q` → `python -m streamlit run app.py` | none | 42 s; see `output/cold-run.txt` |
+| My own machine (Shrey, 23-Nov-2026) | Windows laptop, Python 3.15.0, Git 2.56.0, VS Code terminal | the README steps, nothing else | **pip install failed:** pandas 3.0.5 has no ready-made Windows package for Python 3.15, so pip tried to build it and stopped (no Visual Studio compiler). **Fix:** pinned pandas 3.1.1, which has one; then the same decision line and 36 passed | about 12 minutes including the fix (commits at 6:21 PM and 6:31 PM) |
 
 Results are deterministic: the same data files give the same numbers (no random seeds, no network calls).
 
@@ -87,7 +87,7 @@ Results are deterministic: the same data files give the same numbers (no random 
 | Data retrieval | Prices (Yahoo) and 19 GS2 vintages (ALFRED) through the browser pane, with hashes | Accept: file hash matched the browser's hash; returns match my Lab 15 file | C2; data card §5 |
 | Engine and app code | `engine.py`, `app.py`, `run_analysis.py`, `lcir.py`, `fetch_data.py`, tests | Accept after tests: Lab 14/15 known answers reproduced exactly | Lab 14/15 answers; C1 |
 | GS2 as BIL's expected return | The idea of using my Lab 17 series as the forward cash estimate | Accept: it answers the question I left open in Lab 15 (is BIL's trailing average a sound forward assumption?); forecast error 0.44 vs 1.21 pts | Walk-forward forecast test |
-| -15% worst-12-month loss limit | Proposed as the client's answer to my Lab 15 question | << accept or change, and why - this is the client's risk tolerance >> | Objective-vs-loss menu |
+| -15% worst-12-month loss limit | Proposed as the client's answer to my Lab 15 question | **Accept.** I wrote this client case, and this is the board's tolerance: a 12-month loss beyond 15% ($150,000) is where the fund would have to cut scholarship awards. I kept the limit fixed and let the return objective give way, because missing the objective costs some return, while breaking the limit costs students their awards. | Objective-vs-loss menu |
 | Full-crisis loss screen with proxy | Proposed after the data-window stress | Accept: the proxy tracks VT closely and is used only in the loss screen | Proxy tracking test, data card §3 |
 | Benchmark 60% VT / 40% LQD | Kept from Lab 20 | Accept: the client-style policy benchmark, and it shows the reserve rule binding | - |
 | Drafts of README, memo, data card, this record | Drafted from `output/results.md` | Edited and accepted; every memo number is checked against `results.json` by `tests/test_docs.py` | test_docs.py |
@@ -101,7 +101,58 @@ Results are deterministic: the same data files give the same numbers (no random 
 The prediction is written by me with AI closed in [`docs/lcir/prediction.md`](lcir/prediction.md), committed and pushed **before** the run. `python lcir.py --change ...` refuses to run if the prediction is unfinished, uncommitted or edited after the commit, then writes the before/after below and in [`docs/lcir/result.md`](lcir/result.md). The reconciliation lines are mine.
 
 <!-- LCIR-START -->
-*Not yet run.*
+### Locked Changed-Input Record
+
+**Prediction (verbatim from `docs/lcir/prediction.md`, written AI-off):**
+
+**Prediction - Shrey Goyal**
+
+**Date/time:** 23 November 2026, 5:31 p.m. EST.
+
+**Change:** Raise the minimum BIL reserve from 10% to 80%.
+
+**Command:** `python lcir.py --change reserve_min_pct=80`
+
+| Output | Prediction |
+|---|---|
+| VT weight | Lower: 25% → 20%; BIL rises to 80% |
+| Modeled net return | Lower: 6.04% → about 5.66% |
+| Worst 12-month loss | Higher (less negative): −13.2% → about −10.4% |
+| Meets the 6.50% objective? | No, unchanged |
+| Recommendation | PILOT (objective not met), unchanged |
+
+The 80% BIL minimum becomes binding, forcing five percentage points from stocks into cash. Because BIL has a lower expected return than VT, this reduces expected return while making the worst loss smaller.
+
+The committee would still choose PILOT, but approve an 80% BIL / 20% VT allocation and reconsider the return objective.
+
+I used the 80/20 allocation, 5.66% return, and −10.4% worst loss already printed in `output/results.md`, so these figures came from results I had read rather than an independent prediction.
+
+**Lock:** prediction committed at `28a60414ecb8510cc4c1a7b1c243c5335498c3ae` (2026-11-23T18:33:04-05:00); pushed to GitHub: yes. [Commit on GitHub](https://github.com/shreyofficial2006-art/FIN43900-Project2-Fall2026/commit/28a60414ecb8510cc4c1a7b1c243c5335498c3ae)
+
+**Run (AI closed):** `python lcir.py --change reserve_min_pct=80` at 2026-11-23 23:33:07 UTC, review date 2026-09-30, data files unchanged (prices sha256 `d411a2247724`).
+
+**Changed input:** Reserve minimum in BIL 10% -> 80% of the portfolio. Everything else at its base value.
+
+| Measure | Before (base) | After (changed) |
+|---|---|---|
+| weights | 75 / 0 / 0 / 25 | 80 / 0 / 0 / 20 |
+| VT weight | 25% | 20% |
+| BIL expected return | 4.22% | 4.22% |
+| Modeled net return | 6.04% | 5.66% |
+| Volatility | 3.83% | 3.09% |
+| Worst 12-month loss | -13.2% | -10.4% |
+| All-worst-at-once loss | -12.0% | -9.6% |
+| Meets objective | no | no |
+| Window spread (pts) | 35 | 5 |
+| Recommendation | PILOT (objective not met) | PILOT (objective not met) |
+
+
+**Reconciliation (Shrey writes this after the run, AI closed):** All five matched: VT 25% → 20, return 6.04% → 5.66%, worst loss -13.2% → -10.4%, objective met: no, recommendation: PILOT (objective not met)
+
+**Actual decision effect:** No change: the recommendation stayed PILOT (objective not met) ; the mix moved from 75/25 to 80/20.
+
+**Failure diagnosis (only if the prediction missed; otherwise write "not needed"):** Not needed, because my numbers came from the 80/20 row I'd already read in output/results.md
+
 <!-- LCIR-END -->
 
 ## 8. Limitations and the action each one drives
